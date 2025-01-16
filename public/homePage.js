@@ -4,8 +4,6 @@ logoutButton.action = () => {
     ApiConnector.logout(response => {
         if (response.success) {
             location.reload();
-        } else {
-            throw new Error(response.error);
         }
     })
 }
@@ -13,8 +11,6 @@ logoutButton.action = () => {
 ApiConnector.current (response => {
     if (response.success) {
         ProfileWidget.showProfile(response.data);
-    } else {
-        throw new Error(response.error);
     }
 })
 
@@ -25,13 +21,11 @@ ratesBoard.getCurrencyCourse = () => {
         if (response.success) {
             ratesBoard.clearTable();
             ratesBoard.fillTable(response.data);
-        } else {
-            throw new Error(response.error);
         }
     })
 }
-
-setInterval(ratesBoard.getCurrencyCourse(), 60000)
+ratesBoard.getCurrencyCourse();
+setInterval(ratesBoard.getCurrencyCourse, 60000)
 
 const moneyManager = new MoneyManager ();
 
@@ -42,7 +36,6 @@ moneyManager.addMoneyCallback = (data) => {
             moneyManager.setMessage(true, "Счёт успешно пополнен");
         } else {
             moneyManager.setMessage(false, response.error);
-            throw new Error(response.error);
         }
     })
 }
@@ -54,7 +47,6 @@ moneyManager.conversionMoneyCallback = (data) => {
             moneyManager.setMessage(true, "Валюта успешно конвертирована");
         } else {
             moneyManager.setMessage(false, response.error);
-            throw new Error(response.error);
         }
     })
 }
@@ -66,7 +58,6 @@ moneyManager.sendMoneyCallback = (data) => {
             moneyManager.setMessage(true, "Средства успешно отправлены");
         } else {
             moneyManager.setMessage(false, response.error);
-            throw new Error(response.error);
         }
     })
 }
@@ -79,8 +70,6 @@ favoritesWidget.getFavorites = () => {
             favoritesWidget.clearTable();
             favoritesWidget.fillTable(response.data);
             moneyManager.updateUsersList(response.data);
-        } else {
-            throw new Error(response.error);
         }
     })
 }
@@ -96,7 +85,6 @@ favoritesWidget.addUserCallback = (data) => {
             favoritesWidget.setMessage(true, data.name + " успешно добавлен(а) в книгу");
         } else {
             favoritesWidget.setMessage(false, response.error);
-            throw new Error(response.error);
         }
     })
 }
@@ -110,7 +98,6 @@ favoritesWidget.removeUserCallback = (data) => {
             favoritesWidget.setMessage(true, "Пользователь удалён из книги");
         } else {
             favoritesWidget.setMessage(false, response.error);
-            throw new Error(response.error);
         }
     })
 }
